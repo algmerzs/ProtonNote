@@ -87,13 +87,19 @@ class _PrincipalPageState extends State<PrincipalPage> {
                   '¿Estás seguro de que quieres eleminar esta nota? \n \n ¡No hay vuelta atrás'),
               actions: [
                 TextButton(
+                  onPressed: () {},
+                  child: Text('EDITAR'),
+                ),
+                TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text('CANCELAR')),
-                TextButton(onPressed: () {
-                  _deleteProtonNote(index);
-                }, child: Text('ACEPTAR')),
+                TextButton(
+                    onPressed: () {
+                      _deleteProtonNote(index);
+                    },
+                    child: Text('ACEPTAR')),
               ],
             ));
   }
@@ -105,9 +111,5 @@ class _PrincipalPageState extends State<PrincipalPage> {
     Navigator.pop(context);
   }
 
-  _editProtonNote(int index, ProtonNote protonNote) {
-
-  }
-
-
+  _editProtonNote(int index, ProtonNote protonNote) {}
 }
