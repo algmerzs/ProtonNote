@@ -12,207 +12,125 @@ class NoteCustomization extends StatefulWidget {
 
 class _NoteCustomizationState extends State<NoteCustomization> {
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _noteController = TextEditingController();
+  TextEditingController _subtitleController = TextEditingController();
   String _titleError;
-
-  Color scaffoldColor = Color(0xffFCDA9C);
-  var iconNote = Icons.account_balance;
+  String _subtitleError;
+  String _title = '';
+  String _titleAppBar = '';
 
   @override
   void initState() {
     super.initState();
-    if(widget.protonNote != null){
+    if (widget.protonNote != null) {
+      _title = 'Edita esta nota';
+      _titleAppBar = 'Editar';
       _titleController.text = widget.protonNote.title;
+      _subtitleController.text = widget.protonNote.subtitle;
+    } else {
+      _title = 'Agrega una nota nueva';
+      _titleAppBar = 'Agregar';
     }
   }
 
   @override
   void dispose() {
     _titleController.clear();
-    _noteController.clear();
+    _subtitleController.clear();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: scaffoldColor,
-        appBar: AppBar(
-          backgroundColor: Color(0xff303030),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showDialogFunc(context, true);
-                    },
-                    child: Container(
-                      width: 40,
-                      color: scaffoldColor,
-                    ),
-                  ),
-                  SizedBox(width: 20.0),
-                  GestureDetector(
-                    onTap: () {
-                      showDialogFunc(context, false);
-                    },
-                    child: CircleAvatar(
-                        backgroundColor: Colors.white, child: Icon(iconNote)),
-                  ),
-                  SizedBox(width: 20.0)
-                ],
-              ),
-            ),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-          child: ListView(
+      appBar: AppBar(
+        title: Text(_titleAppBar),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                    errorText: _titleError,
-                    border: InputBorder.none,
-                    hintText: 'Título'),
-                maxLines: null,
-              ),
-              TextField(
-                controller: _noteController,
-                decoration:
-                    InputDecoration(border: InputBorder.none, hintText: 'Nota'),
-                maxLines: null,
-              ),
-              FlatButton(
-                color: Colors.grey[900],
-                onPressed: () {
-                  _addProtonNote();
-                },
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
-                  'Guardar',
-                  style: TextStyle(color: Colors.white),
+                  _title,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
                 ),
               ),
-            ],
-          ),
-        ));
-  }
-
-  showDialogFunc(context, bool isColor) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: Material(
-              type: MaterialType.transparency,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    labelText: 'Titulo',
+                    errorText: _titleError,
+                  ),
                 ),
-                padding: EdgeInsets.all(25),
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: 200,
-                child: colorColumn(isColor),
               ),
-            ),
-          );
-        });
-  }
-
-  colorColumn(isColor) {
-    if (isColor == true) {
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              colorSelected(Color(0xfff898A4)),
-              colorSelected(Color(0xffFCDA9C)),
-              colorSelected(Color(0xffF7FAA1)),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: TextField(
+                  controller: _subtitleController,
+                  decoration: InputDecoration(
+                    labelText: 'Subtitulo',
+                    errorText: _subtitleError,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: RaisedButton(
+                  color: Colors.green,
+                  onPressed: () {
+                    _validateFields();
+                  },
+                  child: Text(
+                    'Guardar',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
             ],
           ),
-          SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              colorSelected(Color(0xffB4F6A4)),
-              colorSelected(Color(0xff9BE0F1)),
-              colorSelected(Color(0xffA2ACEB)),
-            ],
-          ),
-        ],
-      );
-    } else {
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              iconSelected(Icons.add),
-              iconSelected(Icons.ac_unit_outlined),
-              iconSelected(Icons.account_balance),
-            ],
-          ),
-          SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              iconSelected(Icons.baby_changing_station),
-              iconSelected(Icons.cached),
-              iconSelected(Icons.face),
-            ],
-          ),
-        ],
-      );
-    }
-  }
-
-  GestureDetector colorSelected(color) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          scaffoldColor = color;
-        });
-        Navigator.pop(context);
-      },
-      child: Container(width: 60, height: 60, color: color),
+        ),
+      ),
     );
   }
 
-  GestureDetector iconSelected(icon) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          iconNote = icon;
-        });
-        Navigator.pop(context);
-      },
-      child: Container(
-          width: 60,
-          height: 60,
-          child: CircleAvatar(
-              backgroundColor: Colors.grey[300], child: Icon(icon))),
-    );
-  }
-
-  void _addProtonNote() {
+  void _validateFields() {
     var hasError = false;
     if (_titleController.text.trim().isEmpty) {
       hasError = true;
       setState(() {
-        _titleError = 'Debes colocar un título';
+        _titleError = 'El titulo no puede ser vacio';
+      });
+    }
+    if (_titleController.text.trim().isEmpty) {
+      hasError = true;
+      setState(() {
+        _subtitleError = 'El subtitulo no puede ser vacio';
+      });
+    }
+    if (_titleController.text.trim().length < 2) {
+      hasError = true;
+      setState(() {
+        _titleError = 'El titulo tiene que tener mas 2 letras';
       });
     }
 
     if (!hasError) {
-      var protonNote = ProtonNote(
-          title: _titleController.text,
-          color: scaffoldColor,
-          icon: Icon(iconNote));
-      Navigator.of(context).pop(protonNote);
+      _saveProtonNote();
     }
+  }
+
+  void _saveProtonNote() {
+    var protonNote = ProtonNote(
+      title: _titleController.text,
+      subtitle: _subtitleController.text,
+    );
+    Navigator.of(context).pop(protonNote);
   }
 }

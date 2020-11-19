@@ -1,30 +1,42 @@
 import 'package:ProtonNotes/models/protonNote.dart';
 import 'package:flutter/material.dart';
 
-class ProtonNoteItem extends StatelessWidget {
+class ProtonNoteWidget extends StatelessWidget {
   final ProtonNote protonNoteItem;
   final VoidCallback onDelete;
   final VoidCallback onEdit;
 
-  ProtonNoteItem({this.protonNoteItem, @required this.onDelete, @required this.onEdit});
+  ProtonNoteWidget({
+    @required this.protonNoteItem,
+    @required this.onDelete,
+    @required this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: protonNoteItem.color,
+    return InkWell(
+      onTap: onEdit,
+      child: Card(
         child: ListTile(
           leading: CircleAvatar(
-              backgroundColor: Colors.grey[300], child: protonNoteItem.icon),
+            child: Text(_getFirstTwoWordsTitle()),
+            backgroundColor: Colors.yellow,
+          ),
           title: Text(protonNoteItem.title),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(onPressed: onDelete, icon: Icon(Icons.delete, color: Color(0xff303030),)),
-              IconButton(onPressed: onEdit, icon: Icon(Icons.auto_fix_high, color: Color(0xff303030),)),
-            ],
-          ) ,
-
+          subtitle: Text(protonNoteItem.subtitle),
+          trailing: IconButton(
+            onPressed: onDelete,
+            icon: Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+          ),
         ),
-      );
+      ),
+    );
+  }
+
+  String _getFirstTwoWordsTitle() {
+    return protonNoteItem.title.substring(0, 2).toUpperCase();
   }
 }

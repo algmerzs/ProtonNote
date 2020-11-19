@@ -5,71 +5,48 @@ import 'package:ProtonNotes/pages/profile.dart';
 import 'package:ProtonNotes/utils/widgets/protonNote_item_widget.dart';
 import 'package:flutter/material.dart';
 
-class PrincipalPage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _PrincipalPageState createState() => _PrincipalPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _PrincipalPageState extends State<PrincipalPage> {
+class _HomePageState extends State<HomePage> {
   List<ProtonNote> _listProtonNote = [];
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color(0xffDFDFDF),
-        appBar: AppBar(
-          title: Text('ProtonNotes'),
-          centerTitle: true,
-          backgroundColor: Color(0xff303030),
-          actions: [
-            GestureDetector(
-              child: CircleAvatar(
-                  backgroundColor: Colors.white, child: Icon(Icons.add)),
-              onTap: () {
-                _goToAddProtonNote();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('TODOs'),
+      ),
+      body: ListView.builder(
+          itemCount: _listProtonNote.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ProtonNoteWidget(
+              protonNoteItem: _listProtonNote[index],
+              onDelete: () {
+                _confirmDelete(index);
               },
-            ),
-            SizedBox(width: 20.0),
-            GestureDetector(
-              child: Icon(Icons.person),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => Profile(),
-                  ),
-                );
+              onEdit: () {
+                _editTodo(index, _listProtonNote[index]);
               },
-            ),
-            SizedBox(width: 20.0)
-          ],
-        ),
-        drawer: MainDrawer(),
-        body: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-            child: ListView.builder(
-              itemCount: _listProtonNote.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ProtonNoteItem(
-                  onEdit: _editProtonNote(index, _listProtonNote[index]),
-                  protonNoteItem: _listProtonNote[index],
-                  onDelete: () {
-                    _confirmDelete(index);
-                  },
-                );
-              },
-            )),
+            );
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _goToAddPage();
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
 
-  void _goToAddProtonNote() {
+  void _goToAddPage() {
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => NoteCustomization()),
-    ).then((protonNoteItem) {
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => NoteCustomization()))
+        .then((protonNoteItem) {
       if (protonNoteItem != null) {
         setState(() {
           _listProtonNote.add(protonNoteItem);
@@ -80,22 +57,25 @@ class _PrincipalPageState extends State<PrincipalPage> {
 
   void _confirmDelete(int index) {
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Borrar Nota'),
-              content: Text(
-                  '¿Estás seguro de que quieres eleminar esta nota? \n \n ¡No hay vuelta atrás'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('CANCELAR')),
-                TextButton(onPressed: () {
-                  _deleteProtonNote(index);
-                }, child: Text('ACEPTAR')),
-              ],
-            ));
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Borrar TODO'),
+        content: Text('¿Estas seguro de eliminar este TODO?'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancelar')),
+          TextButton(
+            onPressed: () {
+              _deleteProtonNote(index);
+            },
+            child: Text('Aceptar'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _deleteProtonNote(int index) {
@@ -105,9 +85,18 @@ class _PrincipalPageState extends State<PrincipalPage> {
     Navigator.pop(context);
   }
 
-  _editProtonNote(int index, ProtonNote protonNote) {
-
+  void _editTodo(int index, ProtonNote protonNote) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => NoteCustomization(
+                  protonNote: protonNote,
+                ))).then((protonNoteItem) {
+      if (protonNoteItem != null) {
+        setState(() {
+          _listProtonNote[index] = protonNoteItem;
+        });
+      }
+    });
   }
-
-
 }
