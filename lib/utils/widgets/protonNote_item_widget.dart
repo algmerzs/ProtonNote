@@ -17,13 +17,13 @@ class ProtonNoteWidget extends StatelessWidget {
     return InkWell(
       onTap: onEdit,
       child: Card(
+        color: Colors.green,
         child: ListTile(
           leading: CircleAvatar(
-            child: Text(_getFirstTwoWordsTitle()),
+            child: Icon(Icons.add),
             backgroundColor: Colors.yellow,
           ),
           title: Text(protonNoteItem.title),
-          subtitle: Text(protonNoteItem.subtitle),
           trailing: IconButton(
             onPressed: onDelete,
             icon: Icon(
@@ -34,9 +34,5 @@ class ProtonNoteWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _getFirstTwoWordsTitle() {
-    return protonNoteItem.title.substring(0, 2).toUpperCase();
   }
 }

@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
         Container(
           height: double.infinity,
           width: double.infinity,
-          color: Color.fromRGBO(96, 4, 156, 0.25),
+          color: Color.fromRGBO(48, 48, 48, 0.25),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.verified_user_rounded),
-                    fillColor: Color(0xff322133),
+                    fillColor: Color(0xff303030),
                     filled: true),
               ),
               TextField(
@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
                     hintStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.security),
-                    fillColor: Color(0xff322133),
+                    fillColor: Color(0xff303030),
                     filled: true),
                 obscureText: true,
               ),
@@ -56,10 +56,12 @@ class LoginPage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('Ingresar',
-                    style: Theme.of(context).textTheme.headline5),
-                color: Color(0xff4F1C75),
-                splashColor: Color(0xff300F48),
+                child: Text(
+                  'Ingresar',
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Color(0xff4303030),
+                splashColor: Color(0xffDFDFDF),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
               ),

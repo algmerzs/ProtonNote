@@ -16,8 +16,33 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff3DFDFDF),
       appBar: AppBar(
-        title: Text('TODOs'),
+        backgroundColor: Color(0xff303030),
+        centerTitle: true,
+        title: Text('ProtonNote'),
+        actions: [
+          GestureDetector(
+            child: CircleAvatar(
+                backgroundColor: Colors.white, child: Icon(Icons.add)),
+            onTap: () {
+              _goToAddProtonNote();
+            },
+          ),
+          SizedBox(width: 20.0),
+          GestureDetector(
+            child: Icon(Icons.person),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => Profile(),
+                ),
+              );
+            },
+          ),
+          SizedBox(width: 20.0)
+        ],
       ),
       body: ListView.builder(
           itemCount: _listProtonNote.length,
@@ -28,20 +53,15 @@ class _HomePageState extends State<HomePage> {
                 _confirmDelete(index);
               },
               onEdit: () {
-                _editTodo(index, _listProtonNote[index]);
+                _editProtonNote(index, _listProtonNote[index]);
               },
             );
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _goToAddPage();
-        },
-        child: Icon(Icons.add),
-      ),
+      drawer: MainDrawer(),
     );
   }
 
-  void _goToAddPage() {
+  void _goToAddProtonNote() {
     Navigator.push(
             context,
             MaterialPageRoute(
@@ -59,19 +79,19 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Borrar TODO'),
-        content: Text('¿Estas seguro de eliminar este TODO?'),
+        title: Text('Borrar Nota'),
+        content: Text('¿Estas seguro de eliminar este nota?'),
         actions: [
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancelar')),
+              child: Text('CANCELAR')),
           TextButton(
             onPressed: () {
               _deleteProtonNote(index);
             },
-            child: Text('Aceptar'),
+            child: Text('ACEPTAR'),
           ),
         ],
       ),
@@ -85,7 +105,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context);
   }
 
-  void _editTodo(int index, ProtonNote protonNote) {
+  void _editProtonNote(int index, ProtonNote protonNote) {
     Navigator.push(
         context,
         MaterialPageRoute(

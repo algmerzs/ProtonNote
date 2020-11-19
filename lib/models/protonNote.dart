@@ -1,6 +1,8 @@
 class ProtonNote {
   String title;
-  String subtitle;
+  String note;
+  final color;
+  final icon;
 
-  ProtonNote({this.title, this.subtitle});
+  ProtonNote({this.color, this.icon, this.title, this.note});
 }
