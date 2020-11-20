@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(width: 20.0)
         ],
       ),
+      drawer: MainDrawer(),
       body: ListView.builder(
           itemCount: _listProtonNote.length,
           itemBuilder: (BuildContext context, int index) {
@@ -57,7 +58,6 @@ class _HomePageState extends State<HomePage> {
               },
             );
           }),
-      drawer: MainDrawer(),
     );
   }
 
@@ -111,6 +111,8 @@ class _HomePageState extends State<HomePage> {
         MaterialPageRoute(
             builder: (BuildContext context) => NoteCustomization(
                   protonNote: protonNote,
+                  color: protonNote.color,
+                  icon: Icon(protonNote.icon),
                 ))).then((protonNoteItem) {
       if (protonNoteItem != null) {
         setState(() {

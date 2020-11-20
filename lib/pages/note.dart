@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 class NoteCustomization extends StatefulWidget {
   final ProtonNote protonNote;
+  final Color color;
+  final icon;
 
-  NoteCustomization({this.protonNote});
+  NoteCustomization({this.protonNote, this.color, this.icon});
 
   @override
   _NoteCustomizationState createState() => _NoteCustomizationState();
@@ -23,6 +25,9 @@ class _NoteCustomizationState extends State<NoteCustomization> {
     if (widget.protonNote != null) {
       _titleController.text = widget.protonNote.title;
       _noteController.text = widget.protonNote.note;
+      var iconWidget = widget.protonNote.icon;
+      iconNote = IconData(iconWidget);
+      scaffoldColor = widget.protonNote.color;
     }
   }
 
@@ -231,6 +236,8 @@ class _NoteCustomizationState extends State<NoteCustomization> {
   void _saveProtonNote() {
     var protonNote = ProtonNote(
       title: _titleController.text,
+      color: scaffoldColor,
+      icon: Icon(iconNote),
       note: _noteController.text,
     );
     Navigator.of(context).pop(protonNote);

@@ -17,18 +17,18 @@ class ProtonNoteWidget extends StatelessWidget {
     return InkWell(
       onTap: onEdit,
       child: Card(
-        color: Colors.green,
+        color: protonNoteItem.color,
         child: ListTile(
           leading: CircleAvatar(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.yellow,
+            child: protonNoteItem.icon,
+            backgroundColor: Colors.grey[300],
           ),
           title: Text(protonNoteItem.title),
           trailing: IconButton(
             onPressed: onDelete,
             icon: Icon(
               Icons.delete,
-              color: Colors.red,
+              color: Color(0xff303030),
             ),
           ),
         ),
