@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 class NoteCustomization extends StatefulWidget {
   final ProtonNote protonNote;
   final Color color;
-  final icon;
 
-  NoteCustomization({this.protonNote, this.color, this.icon});
+  NoteCustomization({this.protonNote, this.color});
 
   @override
   _NoteCustomizationState createState() => _NoteCustomizationState();
@@ -25,8 +24,6 @@ class _NoteCustomizationState extends State<NoteCustomization> {
     if (widget.protonNote != null) {
       _titleController.text = widget.protonNote.title;
       _noteController.text = widget.protonNote.note;
-      var iconWidget = widget.protonNote.icon;
-      iconNote = IconData(iconWidget);
       scaffoldColor = widget.protonNote.color;
     }
   }
@@ -203,7 +200,7 @@ class _NoteCustomizationState extends State<NoteCustomization> {
     );
   }
 
-  GestureDetector iconSelected(icon) {
+  GestureDetector iconSelected(IconData icon) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -224,7 +221,7 @@ class _NoteCustomizationState extends State<NoteCustomization> {
     if (_titleController.text.trim().isEmpty) {
       hasError = true;
       setState(() {
-        _titleError = 'El titulo no puede ser vacio';
+        _titleError = 'Debes colocar un título';
       });
     }
 

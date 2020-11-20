@@ -15,49 +15,51 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xff3DFDFDF),
-      appBar: AppBar(
-        backgroundColor: Color(0xff303030),
-        centerTitle: true,
-        title: Text('ProtonNote'),
-        actions: [
-          GestureDetector(
-            child: CircleAvatar(
-                backgroundColor: Colors.white, child: Icon(Icons.add)),
-            onTap: () {
-              _goToAddProtonNote();
-            },
-          ),
-          SizedBox(width: 20.0),
-          GestureDetector(
-            child: Icon(Icons.person),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => Profile(),
-                ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xff3DFDFDF),
+        appBar: AppBar(
+          backgroundColor: Color(0xff303030),
+          centerTitle: false,
+          title: Text('ProtonNotes'),
+          actions: [
+            GestureDetector(
+              child: CircleAvatar(
+                  backgroundColor: Colors.white, child: Icon(Icons.add)),
+              onTap: () {
+                _goToAddProtonNote();
+              },
+            ),
+            SizedBox(width: 20.0),
+            GestureDetector(
+              child: Icon(Icons.person),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => Profile(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(width: 20.0)
+          ],
+        ),
+        drawer: MainDrawer(),
+        body: ListView.builder(
+            itemCount: _listProtonNote.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ProtonNoteWidget(
+                protonNoteItem: _listProtonNote[index],
+                onDelete: () {
+                  _confirmDelete(index);
+                },
+                onEdit: () {
+                  _editProtonNote(index, _listProtonNote[index]);
+                },
               );
-            },
-          ),
-          SizedBox(width: 20.0)
-        ],
+            }),
       ),
-      drawer: MainDrawer(),
-      body: ListView.builder(
-          itemCount: _listProtonNote.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ProtonNoteWidget(
-              protonNoteItem: _listProtonNote[index],
-              onDelete: () {
-                _confirmDelete(index);
-              },
-              onEdit: () {
-                _editProtonNote(index, _listProtonNote[index]);
-              },
-            );
-          }),
     );
   }
 
@@ -112,7 +114,6 @@ class _HomePageState extends State<HomePage> {
             builder: (BuildContext context) => NoteCustomization(
                   protonNote: protonNote,
                   color: protonNote.color,
-                  icon: Icon(protonNote.icon),
                 ))).then((protonNoteItem) {
       if (protonNoteItem != null) {
         setState(() {
