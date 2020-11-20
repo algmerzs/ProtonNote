@@ -1,4 +1,5 @@
 import 'package:ProtonNotes/pages/splash_screen.dart';
+import 'package:ProtonNotes/utils/theme.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ProtonNotes',
+      theme: protonTheme(),
       home: SplashScreen(),
     );
   }

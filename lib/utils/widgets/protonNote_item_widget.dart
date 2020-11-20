@@ -23,7 +23,10 @@ class ProtonNoteWidget extends StatelessWidget {
             child: protonNoteItem.icon,
             backgroundColor: Colors.grey[300],
           ),
-          title: Text(protonNoteItem.title),
+          title: Text(
+            protonNoteItem.title,
+            style: Theme.of(context).textTheme.headline2,
+          ),
           trailing: IconButton(
             onPressed: onDelete,
             icon: Icon(

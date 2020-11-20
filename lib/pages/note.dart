@@ -78,6 +78,7 @@ class _NoteCustomizationState extends State<NoteCustomization> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: TextField(
+                  style: Theme.of(context).textTheme.headline4,
                   controller: _titleController,
                   decoration: InputDecoration(
                     hintText: 'Titulo',
@@ -90,6 +91,7 @@ class _NoteCustomizationState extends State<NoteCustomization> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: TextField(
+                  style: Theme.of(context).textTheme.headline2,
                   controller: _noteController,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -101,13 +103,13 @@ class _NoteCustomizationState extends State<NoteCustomization> {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: RaisedButton(
-                  color: Colors.green,
+                  color: Color(0xff303030),
                   onPressed: () {
                     _validateFields();
                   },
                   child: Text(
                     'Guardar',
-                    style: TextStyle(color: Colors.white),
+                    style: Theme.of(context).textTheme.headline3,
                   ),
                 ),
               )
@@ -212,7 +214,11 @@ class _NoteCustomizationState extends State<NoteCustomization> {
           width: 60,
           height: 60,
           child: CircleAvatar(
-              backgroundColor: Colors.grey[300], child: Icon(icon))),
+              backgroundColor: Colors.grey[300],
+              child: Icon(
+                icon,
+                color: Color(0xff303030),
+              ))),
     );
   }
 

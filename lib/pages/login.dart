@@ -31,16 +31,17 @@ class LoginPage extends StatelessWidget {
               TextField(
                 decoration: InputDecoration(
                     hintText: 'Usuario',
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: Theme.of(context).textTheme.headline1,
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.verified_user_rounded),
                     fillColor: Color(0xff303030),
                     filled: true),
               ),
               TextField(
+                style: Theme.of(context).textTheme.headline3,
                 decoration: InputDecoration(
                     hintText: 'Usuario',
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: Theme.of(context).textTheme.headline1,
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.security),
                     fillColor: Color(0xff303030),
@@ -56,14 +57,17 @@ class LoginPage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text(
-                  'Ingresar',
-                  style: TextStyle(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Ingresar',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
                 ),
                 color: Color(0xff4303030),
                 splashColor: Color(0xffDFDFDF),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
+                    borderRadius: BorderRadius.circular(15.0)),
               ),
             ],
           ),
